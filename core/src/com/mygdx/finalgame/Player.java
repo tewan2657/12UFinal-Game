@@ -5,7 +5,10 @@
  */
 package com.mygdx.finalgame;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -65,5 +68,48 @@ public class Player {
     
     }
     
+    public float getX(){
+        return x;
+    }
+    
+    public float getY(){
+     return y;   
+    }
+     public void update(float deltaTime){
+         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+             this.dy = 3;
+             this.elapsed = this.elapsed + deltaTime;
+             this.facingLeft = false;
+         }else{
+             this.dx = 0;
+             this.elapsed = 0;
+         }
+         this.y = this.y + this.dy;
+             
+     }
+     
+     public void render(SpriteBatch batch){
+         
+      if(this.dy == 0){   
+          if(facingLeft){
+              batch.draw(standL, x, y);
+          }else{
+              batch.draw(stand, x, y);
+          }
+      }else if (this.dx > 0){
+          batch.draw(run.getKeyFrame(elapsed,true), x, y);
+          
+      }else if (this.dx < 0) {
+          batch.draw(runL.getKeyFrame(elapsed,true), x, y);
+      }
+     }
+     
+     
+     public void dispose(){
+         atlas.dispose();
+     }
+     
+     
+     
     
 }

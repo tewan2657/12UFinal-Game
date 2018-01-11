@@ -14,7 +14,9 @@ public class finalgame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		//this.setScreen(game);
+		
+                MainGame game = new MainGame(this);
+                this.setScreen(game);
 	}
 
 	@Override

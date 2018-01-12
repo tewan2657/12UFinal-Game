@@ -38,7 +38,7 @@ public class Player {
     private TextureRegion standL;
 
     private TextureAtlas atlas;
-
+    private Rectangle col; 
     public Player(float x, float y) {
 
         this.x = x;
@@ -64,7 +64,7 @@ public class Player {
         runL = new Animation(1f / 10f, runLFrames);
 
         this.facingLeft = false;
-
+        this.col =new Rectangle(x,y,stand.getRegionWidth(),stand.getRegionHeight());
     }
 
     public float getX() {
@@ -87,9 +87,35 @@ public class Player {
         }
 
         this.y = this.y + this.dy;
-
+       
+        this.col.setX(this.x);
+        this.col.setY(this.y);
+       
     }
-
+    public void fixCollision(Rectangle block){
+         //are they colliding
+        if(col.overlaps(block)){
+           float width = Math.min(col.x, block.x) -Math.max(col.x, block.x);
+           float height = Math.min(col.y, block.y) -Math.max(col.y, block.y);
+           if(width<height){
+               //on left
+               if (this.x<block.x){
+                   
+                   this.x = this.x-width;
+           }else{
+                   this.x=this.x+width;
+               }  
+        }else{
+               if (this.y<block.y){
+                   this.y=this.y-height;
+               }else{
+                   this.y=this.y+height;
+               }
+           }
+           col.setX(this.x);
+           col.setY(this.y);
+    }
+    }
     public void render(SpriteBatch batch) {
 
         if (this.dx == 0) {

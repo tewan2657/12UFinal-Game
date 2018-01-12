@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  *
@@ -22,14 +23,15 @@ public class MainGame implements Screen{
  
  private SpriteBatch batch; 
  
+ private World world;
  private final int HEIGHT = 600;
- private final int WIDTH = 800;
+ private final int WIDTH = 1000;
  
  public MainGame(finalgame game){
   this.gameMan = game; 
   
   p1 = new Player(10,10);
-  
+  world =new World();
   this.batch = game.getBatch();
  }
 
@@ -42,11 +44,18 @@ public class MainGame implements Screen{
     public void render(float deltaTime) {
         
         p1.update(deltaTime);
+        
+        for (Rectangle col:world.getLasers()) {
+            p1.fixCollision(col);
+        }
+        
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         p1.render(batch);
         batch.end();
+        world.render();
+        
     }
 
     @Override

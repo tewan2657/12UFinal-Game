@@ -21,7 +21,7 @@ public class World {
         lasers[0]= new Rectangle(100,100,20,100);
         lasers[1]=new Rectangle(110,110,30,110);
         lasers[2]=new Rectangle(120,10,50,110);
-        lasers[3]=new Rectangle(50,300,60,130);   
+        lasers[3]=new Rectangle(100,300,60,130);   
         shape = new ShapeRenderer();
     }
     public void render(){

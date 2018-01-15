@@ -6,10 +6,13 @@
 package com.mygdx.finalgame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,11 +30,13 @@ public class MainGame implements Screen{
  private final int HEIGHT = 600;
  private final int WIDTH = 1000;
  
+ 
  public MainGame(finalgame game){
   this.gameMan = game; 
   
-  p1 = new Player(10,10);
-  world =new World();
+   world = new World();
+   p1 = new Player(10,10);
+ 
   this.batch = game.getBatch();
  }
 
@@ -45,17 +50,19 @@ public class MainGame implements Screen{
         
         p1.update(deltaTime);
         
-        for (Rectangle col:world.getLasers()) {
+        for (Rectangle col : world.getBarrier()) {
             p1.fixCollision(col);
         }
+      
         
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        p1.render(batch);
-        batch.end();
         world.render();
         
+        p1.render(batch);
+        batch.end();
+       
     }
 
     @Override
@@ -70,12 +77,7 @@ public class MainGame implements Screen{
 
     @Override
     public void resume() {
-        
-        
-        
-        
-        
-    
+      
     }
 
     @Override

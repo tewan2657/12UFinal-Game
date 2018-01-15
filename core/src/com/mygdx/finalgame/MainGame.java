@@ -18,66 +18,63 @@ import java.util.ArrayList;
  *
  * @author Adars
  */
-public class MainGame implements Screen{
-    
- private finalgame gameMan;
- 
- private Player p1;
- 
- private SpriteBatch batch; 
- 
- private World world;
- private final int HEIGHT = 600;
- private final int WIDTH = 1000;
- 
- 
- public MainGame(finalgame game){
-  this.gameMan = game; 
-  
-   world = new World();
-   p1 = new Player(10,10);
- 
-  this.batch = game.getBatch();
- }
+public class MainGame implements Screen {
+
+    private finalgame gameMan;
+
+    private Player p1;
+
+    private SpriteBatch batch;
+
+    private World world;
+    private final int HEIGHT = 600;
+    private final int WIDTH = 1000;
+
+    public MainGame(finalgame game) {
+        this.gameMan = game;
+
+        p1 = new Player(10, 10);
+        world = new World();
+        this.batch = game.getBatch();
+    }
 
     @Override
     public void show() {
-        
+
     }
 
     @Override
     public void render(float deltaTime) {
-        
+
         p1.update(deltaTime);
-        
+
         for (Rectangle col : world.getBarrier()) {
             p1.fixCollision(col);
         }
-      
-        
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        world.render();
-        
+
         p1.render(batch);
         batch.end();
-       
+        world.render();
+
     }
 
     @Override
     public void resize(int i, int i1) {
-        
+
     }
 
     @Override
     public void pause() {
-        
+
     }
 
     @Override
     public void resume() {
-      
+
     }
 
     @Override
@@ -87,8 +84,5 @@ public class MainGame implements Screen{
     @Override
     public void dispose() {
     }
- 
-    
- 
-    
+
 }

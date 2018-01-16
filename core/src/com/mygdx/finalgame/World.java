@@ -29,13 +29,13 @@ public class World {
         //random Generator for y location of lasers
         Random Generator = new Random();
         
-        int randY = Generator.nextInt(900 + 1 - 0)+ 0;
+        int randY = Generator.nextInt(500 - 0)+ 0;
         
         //Initialize the lasers 
         lasers = new Rectangle[2];
         
-        lasers[0] = new Rectangle(598, randY, 100, 200); 
-        lasers[1] = new Rectangle(567, randY, 10, 100);
+        lasers[0] = new Rectangle(300, randY, 100, 50); 
+        lasers[1] = new Rectangle(567, randY, 100, 50);
        
         shape = new ShapeRenderer();
     }

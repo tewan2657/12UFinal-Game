@@ -11,29 +11,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class finalgame extends Game {
 
     private SpriteBatch batch;
-   
-
-    
+   // Texture img;
     
     @Override
     public void create() {
-        batch = new SpriteBatch();
-
+        //lasers = new
+       // batch = new SpriteBatch();
+      //  img = new Texture("cart_background.jpg");
         MainGame game = new MainGame(this);
         this.setScreen(game);
+       // lasers = new Sprite()
     }
 
     @Override
     public void render() {
         super.render();
-        batch.begin();
-    
-        batch.end();
+//        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//        batch.begin();
+//        batch.draw(img, 0, 0);
+//        batch.end();
+       
     }
 
     @Override
     public void dispose() {
         batch.dispose();
+      //  img.dispose();
 
     }
 

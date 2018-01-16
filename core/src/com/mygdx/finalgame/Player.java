@@ -39,6 +39,7 @@ public class Player {
 
     private TextureAtlas atlas;
     private Rectangle col; 
+    
     public Player(float x, float y) {
 
         this.x = x;
@@ -64,13 +65,20 @@ public class Player {
         runL = new Animation(1f / 10f, runLFrames);
 
         this.facingLeft = false;
-        this.col =new Rectangle(x,y,stand.getRegionWidth(),stand.getRegionHeight());
+        this.col = new Rectangle(x,y,stand.getRegionWidth(),stand.getRegionHeight());
     }
 
+    /**
+     * returns the x axis location variable for player 
+     * @return x
+     */
     public float getX() {
         return x;
     }
-
+    /**
+     * returns the y axis location variable for player
+     * @return y 
+     */
     public float getY() {
         return y;
     }
@@ -95,16 +103,16 @@ public class Player {
     public void fixCollision(Rectangle block){
          //are they colliding
         if(col.overlaps(block)){
-           float width = Math.min(col.x, block.x) -Math.max(col.x, block.x);
-           float height = Math.min(col.y, block.y) -Math.max(col.y, block.y);
+           float width = Math.min(col.x + col.width, block.x + block.width) -Math.max(col.x, block.x);
+           float height = Math.min(col.y + col.height, block.y + block.height) -Math.max(col.y, block.y);
            if(width<height){
                //on left
-               if (this.x<block.x){
+               if (this.x < block.x){
                    
-                   this.x = this.x-width;
+                   this.x = this.x - width;
            }else{
-                   this.x=this.x+width;
-               }  
+                   this.x = this.x + width;
+               }
         }else{
                if (this.y<block.y){
                    this.y=this.y-height;

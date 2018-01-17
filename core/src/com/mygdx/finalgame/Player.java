@@ -85,12 +85,12 @@ public class Player {
 
     public void update(float deltaTime) {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            this.dy = +3;
+            this.dy = +4;
             this.elapsed = this.elapsed + deltaTime;
             this.facingLeft = false;
 
         } else {
-            this.dy = -3;
+            this.dy = -4;
             this.elapsed = this.elapsed + deltaTime;
         }
 

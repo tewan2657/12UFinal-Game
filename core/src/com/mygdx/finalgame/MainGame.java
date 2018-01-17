@@ -38,7 +38,7 @@ public class MainGame implements Screen {
         
        // startbtn = new Texture("start.png");
         
-        p1 = new Player(10, 10);
+        p1 = new Player(10, 40);
         world = new World();
         this.batch = game.getBatch();
     }

@@ -28,7 +28,7 @@ public class World {
         //initialize the barriers
         barrier = new Rectangle[2];
         //ROOF
-        barrier[0]= new Rectangle(0, 600, 1000, 10);
+        barrier[0]= new Rectangle(0, 600, 1000, 1000);
         //GROUND
         barrier[1]= new Rectangle(0, 0, 1000, 5);
         

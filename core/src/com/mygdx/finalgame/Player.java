@@ -38,8 +38,8 @@ public class Player {
     private TextureRegion standL;
 
     private TextureAtlas atlas;
-    private Rectangle col; 
-    
+    private Rectangle col;
+
     public Player(float x, float y) {
 
         this.x = x;
@@ -65,65 +65,70 @@ public class Player {
         runL = new Animation(1f / 10f, runLFrames);
 
         this.facingLeft = false;
-        this.col = new Rectangle(x,y,stand.getRegionWidth(),stand.getRegionHeight());
+        this.col = new Rectangle(x, y, stand.getRegionWidth(), stand.getRegionHeight());
     }
 
     /**
-     * returns the x axis location variable for player 
+     * returns the x axis location variable for player
+     *
      * @return x
      */
     public float getX() {
         return x;
     }
+
     /**
      * returns the y axis location variable for player
-     * @return y 
+     *
+     * @return y
      */
     public float getY() {
         return y;
     }
 
     public void update(float deltaTime) {
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            this.dy = +3;
+        if (Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
+            this.dy = +5;
             this.elapsed = this.elapsed + deltaTime;
             this.facingLeft = false;
 
         } else {
-            this.dy = -3;
+            this.dy = -4;
             this.elapsed = this.elapsed + deltaTime;
         }
 
         this.y = this.y + this.dy;
-       
+
         this.col.setX(this.x);
         this.col.setY(this.y);
-       
+
     }
-    public void fixCollision(Rectangle block){
-         //are they colliding
-        if(col.overlaps(block)){
-           float width = Math.min(col.x + col.width, block.x + block.width) -Math.max(col.x, block.x);
-           float height = Math.min(col.y + col.height, block.y + block.height) -Math.max(col.y, block.y);
-           if(width<height){
-               //on left
-               if (this.x < block.x){
-                   
-                   this.x = this.x - width;
-           }else{
-                   this.x = this.x + width;
-               }
-        }else{
-               if (this.y<block.y){
-                   this.y=this.y-height;
-               }else{
-                   this.y=this.y+height;
-               }
-           }
-           col.setX(this.x);
-           col.setY(this.y);
+
+    public void fixCollision(Rectangle block) {
+        //are they colliding
+        if (col.overlaps(block)) {
+            float width = Math.min(col.x + col.width, block.x + block.width) - Math.max(col.x, block.x);
+            float height = Math.min(col.y + col.height, block.y + block.height) - Math.max(col.y, block.y);
+            if (width < height) {
+                //on left
+                if (this.x < block.x) {
+
+                    this.x = this.x - width;
+                } else {
+                    this.x = this.x + width;
+                }
+            } else {
+                if (this.y < block.y) {
+                    this.y = this.y - height;
+                } else {
+                    this.y = this.y + height;
+                }
+            }
+            col.setX(this.x);
+            col.setY(this.y);
+        }
     }
-    }
+
     public void render(SpriteBatch batch) {
 
         if (this.dx == 0) {

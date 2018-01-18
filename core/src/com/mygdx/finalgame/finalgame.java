@@ -9,15 +9,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class finalgame extends Game {
 
-    private SpriteBatch batch;
-   // Texture img;
+    //Dimensions
+    public static final int HEIGHT = 600;
+    public static final int WIDTH = 1000;
+    
+    //sprite Batch 
+    public SpriteBatch batch;
+    public ScrollingBackground scrollingbackground;
+    //IMAGE
+    Texture img;
 
     @Override
     public void create() {
-        
+
         batch = new SpriteBatch();
-      //  img = new Texture("cart_background.jpg");
+        this.scrollingbackground = new ScrollingBackground();
         MainGame game = new MainGame(this);
+        img = new Texture("cart_background.jpg");
         this.setScreen(game);
     }
 
@@ -27,20 +35,21 @@ public class finalgame extends Game {
 //        Gdx.gl.glClearColor(0, 0, 0, 1);
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        batch.begin();
-//        batch.draw(img, 0, 0);
-//        batch.end();
-       
+//        
     }
 
     @Override
     public void dispose() {
         batch.dispose();
-      //  img.dispose();
+        img.dispose();
 
+    }
+    @Override
+    public void resize(int width, int height){
+        super.resize(width, height);
     }
 
     public SpriteBatch getBatch() {
-
         return batch;
     }
 }

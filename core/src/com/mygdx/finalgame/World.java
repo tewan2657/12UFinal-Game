@@ -14,8 +14,10 @@ import java.util.Random;
  * @author Adars
  */
 public class World {
+    //World Barriers where player can not go 
     private Rectangle [] barrier;
-    private Rectangle [] lasers;
+   // private Rectangle [] lasers;
+    //Shape Rendering
     private ShapeRenderer shape;
   
     public World(){
@@ -26,35 +28,28 @@ public class World {
         //GROUND
         barrier[1]= new Rectangle(0, 0, 1000, 5);
         
-        //random Generator for y location of lasers
-        Random Generator = new Random();
-        
-        int randY = Generator.nextInt(500 - 0)+ 0;
-        
-        //Initialize the lasers 
-        lasers = new Rectangle[2];
-        
-        lasers[0] = new Rectangle(300, randY, 100, 50); 
-        lasers[1] = new Rectangle(567, randY, 100, 50);
-       
+        // initialize the shape renderer.
         shape = new ShapeRenderer();
     }
     public void render(){
+        //Render the shapes 
         shape.begin(ShapeRenderer.ShapeType.Filled);
         for (int i = 0; i < barrier.length; i++) {
             shape.rect(barrier[i].x, barrier[i].y, barrier[i].width, barrier[i].height);
         }
-        for (int i = 0; i < lasers.length; i++) {
-            shape.rect(lasers[i].x, lasers[i].y, lasers[i].width, lasers[i].height);
-        }
+       
         shape.end();
         
     }
+    /**
+     * 
+     * @return barrier
+     */
     public Rectangle[] getBarrier(){
         return barrier;
 }
-    public Rectangle[] getLasers(){
-        return lasers;
-    }
+//    public Rectangle[] getLasers(){
+//        return lasers;
+//    }
 }
 

@@ -14,32 +14,42 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author Adars
  */
 public class Missile {
-
-    private static final int SPEED = 500;
-    public static final int WIDTH = 16;
-    public static final int HEIGHT = 16;
+    //INSTANCE Variables
+    //Speed of the missile
+    private static final int SPEED = 450;
+    //width of the missile
+    public static final int WIDTH = 400;
+    //height of the missile 
+    public static final int HEIGHT = 25;
+    //Texture image
     private static Texture texture;
 
+    // x and y coordinates of missile 
     float x, y;
+    //Remove missile when they leave screen 
     public boolean remove = false;
 
-    public Missile(float x) {
-        this.x = x;
-        this.y = Gdx.graphics.getHeight();
+    public Missile(float y) {
+        //initialize the x and y coordinates
+        this.x = Gdx.graphics.getWidth();
+        this.y = y;
 
         if (texture == null) 
-            texture = new Texture("figure_8.png");
+            texture = new Texture("missle.png");
         
     }
 
     public void update(float deltaTime) {
-        y -= SPEED * deltaTime;
-        if(y < -HEIGHT){
+        //update thier movement
+        x -= SPEED * deltaTime;
+        //if they go off screen then remove them.  
+        if(x < -HEIGHT){
             remove = true;
         }
     }
 
     public void render(SpriteBatch batch) {
+        //draw the missile. 
         batch.draw(texture, x, y);
     }
 }

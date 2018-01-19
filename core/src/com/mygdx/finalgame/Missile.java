@@ -40,7 +40,7 @@ public class Missile {
         
         if (texture == null) 
             texture = new Texture("missle.png");
-        
+        this.col = new Rectangle(x,y, texture.getWidth(), texture.getHeight());
     }
 
     public void update(float deltaTime) {

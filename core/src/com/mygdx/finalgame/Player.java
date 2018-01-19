@@ -105,7 +105,7 @@ public class Player {
     }
 
     public void fixCollision(Rectangle block) {
-        //are they colliding
+        //WORLD BARRIER COLLISIONS 
         if (col.overlaps(block)) {
             float width = Math.min(col.x + col.width, block.x + block.width) - Math.max(col.x, block.x);
             float height = Math.min(col.y + col.height, block.y + block.height) - Math.max(col.y, block.y);
@@ -127,6 +127,7 @@ public class Player {
             col.setX(this.x);
             col.setY(this.y);
         }
+        
     }
 
     public void render(SpriteBatch batch) {

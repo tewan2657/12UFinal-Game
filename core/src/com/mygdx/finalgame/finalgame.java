@@ -15,7 +15,7 @@ public class finalgame extends Game {
     
     //sprite Batch 
     public SpriteBatch batch;
-    public ScrollingBackground scrollingbackground;
+    public Background background;
     //IMAGE
     Texture img;
 
@@ -23,7 +23,7 @@ public class finalgame extends Game {
     public void create() {
 
         batch = new SpriteBatch();
-        this.scrollingbackground = new ScrollingBackground();
+       this.background = new Background();
         MainGame game = new MainGame(this);
         img = new Texture("cart_background.jpg");
         this.setScreen(game);

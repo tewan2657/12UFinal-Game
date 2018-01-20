@@ -26,6 +26,9 @@ public class MainGame implements Screen {
     public static final float MIN_MISSILE_SPAWN_TIME = 0.6f;
     public static final float MAX_MISSILE_SPAWN_TIME = 1f;
 
+    public static final int PLAYER_WIDTH = 100;
+    public static final int PLAYER_HEIGHT = 100;
+    
     //GAME MANAGER
     private finalgame game;
     //PlAYER
@@ -37,7 +40,8 @@ public class MainGame implements Screen {
 
     //random Generator 
     Random random;
-
+    
+  
     //spawn time for missile
     float missileSpawnTimer;
 
@@ -58,6 +62,7 @@ public class MainGame implements Screen {
 
         //initialize the player and its location
         p1 = new Player(10, 10);
+    
         //initialize the world;
         world = new World();
         //initialize the sprite batch 
@@ -75,7 +80,7 @@ public class MainGame implements Screen {
         p1.update(deltaTime);
 
         for (Rectangle col : world.getBarrier()) {
-            p1.fixCollision(col);
+                p1.fixCollision(col);
         }
       //Missile Spawn CODE
         missileSpawnTimer -= deltaTime;
@@ -92,6 +97,7 @@ public class MainGame implements Screen {
                 removeMissile.add(missile);
         }    
             missiles.removeAll(removeMissile);
+          
             
         
 
@@ -102,10 +108,10 @@ public class MainGame implements Screen {
         batch.begin();
         
         //render the scrolling background
-        game.scrollingbackground.updateAndRender(deltaTime, game.getBatch());
+        game.background.updateAndRender(deltaTime, game.getBatch());
         
        
-        
+       
         //RENDER THE MISSILE
         for(Missile missile : missiles){
             missile.render(game.getBatch());     

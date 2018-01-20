@@ -38,9 +38,10 @@ public class Missile {
         this.y = y;
 
         
+        
         if (texture == null) 
             texture = new Texture("missle.png");
-        this.col = new Rectangle(x,y, texture.getWidth(), texture.getHeight());
+        this.col = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
     }
 
     public void update(float deltaTime) {
@@ -56,4 +57,14 @@ public class Missile {
         //draw the missile. 
         batch.draw(texture, x, y);
     }
+    
+    public float getX(){
+        return x;
+    }
+    
+    public float getY(){
+        return y;
+    }
+    
+    
 }

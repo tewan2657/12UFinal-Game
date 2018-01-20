@@ -20,6 +20,9 @@ import com.badlogic.gdx.utils.Array;
  * @author Adars
  */
 public class Player {
+    
+    public static final int WIDTH = 300;
+    public static final int HEIGHT = 100;
 
     private float x;
     private float y;
@@ -28,7 +31,7 @@ public class Player {
     private float dy;
 
     private boolean facingLeft;
-
+   
     private float elapsed;
 
     private Animation<TextureRegion> run;
@@ -41,7 +44,8 @@ public class Player {
     private Rectangle col;
 
     public Player(float x, float y) {
-
+        
+       
         this.x = x;
         this.y = y;
 
@@ -98,6 +102,8 @@ public class Player {
         }
 
         this.y = this.y + this.dy;
+        
+     
 
         this.col.setX(this.x);
         this.col.setY(this.y);
@@ -127,6 +133,9 @@ public class Player {
             col.setX(this.x);
             col.setY(this.y);
         }
+       
+        
+        
         
     }
 
@@ -149,5 +158,7 @@ public class Player {
     public void dispose() {
         atlas.dispose();
     }
+    
+    
 
 }

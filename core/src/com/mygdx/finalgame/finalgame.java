@@ -23,7 +23,7 @@ public class finalgame extends Game {
     public void create() {
 
         batch = new SpriteBatch();
-       this.background = new Background();
+        this.background = new Background();
         MainGame game = new MainGame(this);
         img = new Texture("cart_background.jpg");
         this.setScreen(game);

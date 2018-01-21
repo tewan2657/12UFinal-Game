@@ -11,6 +11,4 @@ package com.mygdx.finalgame;
  */
 public class Explosion {
     
-    
-    
 }

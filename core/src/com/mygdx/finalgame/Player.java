@@ -133,9 +133,6 @@ public class Player {
             col.setX(this.x);
             col.setY(this.y);
         }
-       
-        
-        
         
     }
 
@@ -159,6 +156,7 @@ public class Player {
         atlas.dispose();
     }
     
+  
     
 
 }

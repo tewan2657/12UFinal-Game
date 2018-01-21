@@ -24,24 +24,25 @@ public class Missile {
     public static final int HEIGHT = 25;
     //Texture image
     private static Texture texture;
-
+    
+   CollisionBlock block;
+    
     // x and y coordinates of missile 
     float x, y;
     //Remove missile when they leave screen 
     public boolean remove = false;
     
-    private Rectangle col;
 
     public Missile(float y) {
         //initialize the x and y coordinates
         this.x = Gdx.graphics.getWidth();
         this.y = y;
+        this.block = new CollisionBlock(x , y, WIDTH, HEIGHT);
 
         
         
         if (texture == null) 
             texture = new Texture("missle.png");
-        this.col = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
     }
 
     public void update(float deltaTime) {
@@ -51,7 +52,11 @@ public class Missile {
         if(x < -HEIGHT){
             remove = true;
         }
-    }
+        
+            block.move(x, y);
+        
+        }
+    
   
     public void render(SpriteBatch batch) {
         //draw the missile. 
@@ -64,6 +69,11 @@ public class Missile {
     
     public float getY(){
         return y;
+    }
+    
+    public CollisionBlock getBlock(){
+        return block;
+        
     }
     
     

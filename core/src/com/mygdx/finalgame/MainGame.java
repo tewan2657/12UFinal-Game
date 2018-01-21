@@ -25,10 +25,10 @@ public class MainGame implements Screen {
     //MAX AND MIN time to spawn in a missile 
     public static final float MIN_MISSILE_SPAWN_TIME = 0.6f;
     public static final float MAX_MISSILE_SPAWN_TIME = 1f;
-
-    public static final int PLAYER_WIDTH = 100;
-    public static final int PLAYER_HEIGHT = 100;
     
+     public static final int PWIDTH = 100;
+     public static final int PHEIGHT = 230;
+ 
     //GAME MANAGER
     private finalgame game;
     //PlAYER
@@ -37,10 +37,13 @@ public class MainGame implements Screen {
     private SpriteBatch batch;
     //WORLD
     private World world;
+    
+    int score;
 
     //random Generator 
     Random random;
     
+    CollisionBlock playerBlock;
   
     //spawn time for missile
     float missileSpawnTimer;
@@ -56,13 +59,17 @@ public class MainGame implements Screen {
         //initialize the game  
         this.game = game;
         
+
+      
         missiles = new ArrayList<Missile>();
         random = new Random();
         missileSpawnTimer = random.nextFloat() * (MAX_MISSILE_SPAWN_TIME - MIN_MISSILE_SPAWN_TIME) + MIN_MISSILE_SPAWN_TIME;
 
         //initialize the player and its location
         p1 = new Player(10, 10);
-    
+        
+        playerBlock = new CollisionBlock(p1.getX(), p1.getY(), PWIDTH, PHEIGHT);
+
         //initialize the world;
         world = new World();
         //initialize the sprite batch 
@@ -97,10 +104,27 @@ public class MainGame implements Screen {
                 removeMissile.add(missile);
         }    
             missiles.removeAll(removeMissile);
-          
             
-        
+            playerBlock.move(p1.getX(), p1.getY());
+         
+            for (Missile missile : missiles){
+         if (missile.getBlock().collidesWith(playerBlock)){
+              removeMissile.add(missile);
+              
+              this.dispose();
+              game.setScreen(new GameOverScreen(game,score));
+              return;
+              
+         }  
+         
+              
+            } 
+         
+            missiles.removeAll(removeMissile);
+            
+       
 
+            
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
@@ -110,8 +134,6 @@ public class MainGame implements Screen {
         //render the scrolling background
         game.background.updateAndRender(deltaTime, game.getBatch());
         
-       
-       
         //RENDER THE MISSILE
         for(Missile missile : missiles){
             missile.render(game.getBatch());     

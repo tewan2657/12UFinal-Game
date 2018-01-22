@@ -26,8 +26,8 @@ public class MainGame implements Screen {
     public static final float MIN_MISSILE_SPAWN_TIME = 0.6f;
     public static final float MAX_MISSILE_SPAWN_TIME = 1f;
     
-     public static final int PWIDTH = 100;
-     public static final int PHEIGHT = 230;
+     public static final int PWIDTH = 20;
+     public static final int PHEIGHT = 86;
  
     //GAME MANAGER
     private finalgame game;
@@ -39,6 +39,9 @@ public class MainGame implements Screen {
     private World world;
     
     int score;
+    
+    //EXPLOSION
+    Explosion blowUp;
 
     //random Generator 
     Random random;
@@ -59,8 +62,6 @@ public class MainGame implements Screen {
         //initialize the game  
         this.game = game;
         
-
-      
         missiles = new ArrayList<Missile>();
         random = new Random();
         missileSpawnTimer = random.nextFloat() * (MAX_MISSILE_SPAWN_TIME - MIN_MISSILE_SPAWN_TIME) + MIN_MISSILE_SPAWN_TIME;
@@ -107,20 +108,20 @@ public class MainGame implements Screen {
             
             playerBlock.move(p1.getX(), p1.getY());
          
+            
+            //PLAYER AND MISSILE COLLISION 
             for (Missile missile : missiles){
-         if (missile.getBlock().collidesWith(playerBlock)){
+            if (missile.getBlock().collidesWith(playerBlock)){
               removeMissile.add(missile);
               
-              this.dispose();
-              game.setScreen(new GameOverScreen(game,score));
-              return;
-              
+              blowUp.dispose();
+              return;      
          }  
          
               
             } 
          
-            missiles.removeAll(removeMissile);
+           missiles.removeAll(removeMissile);
             
        
 

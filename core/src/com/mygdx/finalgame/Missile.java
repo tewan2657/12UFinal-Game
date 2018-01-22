@@ -19,7 +19,7 @@ public class Missile {
     //Speed of the missile
     private static final int SPEED = 400;
     //width of the missile
-    public static final int WIDTH = 400;
+    public static final int WIDTH = 300;
     //height of the missile 
     public static final int HEIGHT = 25;
     //Texture image

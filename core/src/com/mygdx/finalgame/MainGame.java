@@ -40,8 +40,8 @@ public class MainGame implements Screen {
     
     int score;
     
-    //EXPLOSION
-    Explosion blowUp;
+    // Array List EXPLOSION
+   ArrayList<Explosion> blowUp;
 
     //random Generator 
     Random random;
@@ -62,6 +62,7 @@ public class MainGame implements Screen {
         //initialize the game  
         this.game = game;
         
+        blowUp = new ArrayList<Explosion>();
         missiles = new ArrayList<Missile>();
         random = new Random();
         missileSpawnTimer = random.nextFloat() * (MAX_MISSILE_SPAWN_TIME - MIN_MISSILE_SPAWN_TIME) + MIN_MISSILE_SPAWN_TIME;
@@ -99,7 +100,7 @@ public class MainGame implements Screen {
         
         //update the MISSILE
         ArrayList<Missile> removeMissile = new ArrayList<Missile>();
-        for(Missile missile: missiles){
+        for(Missile missile : missiles){
             missile.update(deltaTime);
             if(missile.remove)
                 removeMissile.add(missile);
@@ -113,18 +114,21 @@ public class MainGame implements Screen {
             for (Missile missile : missiles){
             if (missile.getBlock().collidesWith(playerBlock)){
               removeMissile.add(missile);
-              
-              blowUp.dispose();
-              return;      
-         }  
-         
-              
+              blowUp.add(new Explosion(missile.getX(), missile.getY()));
+                 
+         }          
             } 
          
            missiles.removeAll(removeMissile);
             
+           
+       //Update the explosion
+       for (Explosion explosion: blowUp){
+           explosion.update(deltaTime);
+       }
        
-
+        
+       
             
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -138,6 +142,10 @@ public class MainGame implements Screen {
         //RENDER THE MISSILE
         for(Missile missile : missiles){
             missile.render(game.getBatch());     
+        }
+        
+        for (Explosion explosion : blowUp){
+         explosion.render(batch);
         }
 
         //RENDER THE PLAYER

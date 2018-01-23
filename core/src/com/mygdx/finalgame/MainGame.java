@@ -25,55 +25,65 @@ public class MainGame implements Screen {
     //MAX AND MIN time to spawn in a missile 
     public static final float MIN_MISSILE_SPAWN_TIME = 0.6f;
     public static final float MAX_MISSILE_SPAWN_TIME = 1f;
-    
-     public static final int PWIDTH = 20;
-     public static final int PHEIGHT = 86;
- 
-    //GAME MANAGER
+
+    //Final game 
     private finalgame game;
+
     //PlAYER
     private Player p1;
+
     //BATCH
     private SpriteBatch batch;
+
     //WORLD
     private World world;
-    
+
+    //Score 
     int score;
-    
-    // Array List EXPLOSION
-   ArrayList<Explosion> blowUp;
+
+    //Array List EXPLOSION
+    ArrayList<Explosion> explos;
 
     //random Generator 
     Random random;
-    
+
+    //Collision block for player collisions with missiles 
     CollisionBlock playerBlock;
-  
+
     //spawn time for missile
     float missileSpawnTimer;
 
     //ArrayList for the missiles
     ArrayList<Missile> missiles;
 
-    //DIMENSIONS
-    private final int HEIGHT = 600;
-    private final int WIDTH = 1000;
-
     public MainGame(finalgame game) {
         //initialize the game  
         this.game = game;
-        
-        blowUp = new ArrayList<Explosion>();
+
+        //initialize the Explosion ArrayList
+        explos = new ArrayList<Explosion>();
+
+        //initialize the Missile ArrayList
         missiles = new ArrayList<Missile>();
+
+        //initialize the random generator 
         random = new Random();
+
+        //Use random generator to make random spawn times for missiles
         missileSpawnTimer = random.nextFloat() * (MAX_MISSILE_SPAWN_TIME - MIN_MISSILE_SPAWN_TIME) + MIN_MISSILE_SPAWN_TIME;
 
         //initialize the player and its location
         p1 = new Player(10, 10);
-        
-        playerBlock = new CollisionBlock(p1.getX(), p1.getY(), PWIDTH, PHEIGHT);
+
+        //initialize the player block with player x and y coordinates and player height and width 
+        playerBlock = new CollisionBlock(p1.getX(), p1.getY(), p1.getWidth(), p1.getHeight());
 
         //initialize the world;
         world = new World();
+        
+        //initialize the score 
+        score = 0;
+
         //initialize the sprite batch 
         this.batch = game.getBatch();
     }
@@ -85,73 +95,98 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float deltaTime) {
-
+        //Update the player
         p1.update(deltaTime);
 
+        //for each world barrier blocks and player block
         for (Rectangle col : world.getBarrier()) {
-                p1.fixCollision(col);
+            //fix the collision(method from player class)
+            p1.fixCollision(col);
         }
-      //Missile Spawn CODE
+
+        //Missile Spawn Code 
+        //update the spawn timer
         missileSpawnTimer -= deltaTime;
+        //if timer less than zero 
         if (missileSpawnTimer <= 0) {
+            //randomly make new spawn timer for missile. 
             missileSpawnTimer = random.nextFloat() * (MAX_MISSILE_SPAWN_TIME - MIN_MISSILE_SPAWN_TIME) + MIN_MISSILE_SPAWN_TIME;
+            //add the missiles. 
             missiles.add(new Missile(random.nextInt(Gdx.graphics.getHeight() - Missile.HEIGHT)));
         }
-        
+
         //update the MISSILE
+        //new ArrayList to remove missiles that hit the player 
         ArrayList<Missile> removeMissile = new ArrayList<Missile>();
-        for(Missile missile : missiles){
+        // for each missiles 
+        for (Missile missile : missiles) {
+            //update 
             missile.update(deltaTime);
-            if(missile.remove)
+      
+            if (missile.remove) {
                 removeMissile.add(missile);
-        }    
-            missiles.removeAll(removeMissile);
-            
-            playerBlock.move(p1.getX(), p1.getY());
-         
-            
-            //PLAYER AND MISSILE COLLISION 
-            for (Missile missile : missiles){
-            if (missile.getBlock().collidesWith(playerBlock)){
-              removeMissile.add(missile);
-              blowUp.add(new Explosion(missile.getX(), missile.getY()));
-                 
-         }          
-            } 
-         
-           missiles.removeAll(removeMissile);
-            
-           
-       //Update the explosion
-       for (Explosion explosion: blowUp){
-           explosion.update(deltaTime);
-       }
-       
-        
-       
-            
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        //BEGINING OF THE SPRITE BATCH 
-        batch.begin();
-        
-        //render the scrolling background
-        game.background.updateAndRender(deltaTime, game.getBatch());
-        
-        //RENDER THE MISSILE
-        for(Missile missile : missiles){
-            missile.render(game.getBatch());     
+                 score += 1; 
+            }
+        }
+        //remove the missiles that hit the player 
+        missiles.removeAll(removeMissile);
+
+        // move the player block with player x and y
+        playerBlock.move(p1.getX(), p1.getY());
+
+        // Player and Missile collision 
+        // for each missile that hits player 
+        for (Missile missile : missiles) {
+            if (missile.getBlock().collidesWith(playerBlock)) {
+                // add a missile to remove later 
+                removeMissile.add(missile);
+                //add an Explosion animation at the missiles x and y coordinates 
+                 explos.add(new Explosion(finalgame.WIDTH/2 - 100, finalgame.HEIGHT /2, 500, 500));
+              
+               //Pause Score when player is hit by missile 
+                score += 0;
+                
+              // this.dispose();
+//               game.setScreen(new GameOverScreen(game,score));
+//               return;
+                
+                
+            }
         }
         
-        for (Explosion explosion : blowUp){
-         explosion.render(batch);
+        // remove the missiles 
+        missiles.removeAll(removeMissile);
+
+        //Update the explosion
+        for (Explosion explosion : explos) {
+            explosion.update(deltaTime);
+        }
+
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //BEGINING OF THE SPRITE BATCH 
+        batch.begin();
+
+        //render the scrolling background
+        game.background.updateAndRender(deltaTime, game.getBatch());
+
+        //RENDER THE MISSILE
+        for (Missile missile : missiles) {
+            missile.render(game.getBatch());
+        }
+
+        //Render the explosion  
+        for (Explosion explosion : explos) {
+            explosion.render(batch);
         }
 
         //RENDER THE PLAYER
         p1.render(batch);
+
         //END OF THE SPRITE BATCH
         batch.end();
+
         //RENDER THE WORLD
         world.render();
 
@@ -159,17 +194,14 @@ public class MainGame implements Screen {
 
     @Override
     public void resize(int i, int i1) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override

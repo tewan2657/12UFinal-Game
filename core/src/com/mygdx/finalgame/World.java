@@ -16,40 +16,40 @@ import java.util.Random;
 public class World {
     //World Barriers where player can not go 
     private Rectangle [] barrier;
-   // private Rectangle [] lasers;
+
     //Shape Rendering
     private ShapeRenderer shape;
   
     public World(){
         //initialize the barriers
         barrier = new Rectangle[2];
-        //ROOF
+        //ROOF barrier
         barrier[0]= new Rectangle(0, 600, 1000, 10);
-        //GROUND
+        //GROUND barrier
         barrier[1]= new Rectangle(0, 0, 1000, 5);
         
-        // initialize the shape renderer.
+        //initialize the shape renderer.
         shape = new ShapeRenderer();
     }
+    /**
+     * render method to render the shapes created
+     */
     public void render(){
         //Render the shapes 
         shape.begin(ShapeRenderer.ShapeType.Filled);
         for (int i = 0; i < barrier.length; i++) {
             shape.rect(barrier[i].x, barrier[i].y, barrier[i].width, barrier[i].height);
         }
-       
-        shape.end();
-        
+        shape.end();   
     }
+    
     /**
-     * 
+     * get the barriers 
      * @return barrier
      */
     public Rectangle[] getBarrier(){
         return barrier;
 }
-//    public Rectangle[] getLasers(){
-//        return lasers;
-//    }
+
 }
 

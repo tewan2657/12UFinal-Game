@@ -23,10 +23,14 @@ public class Explosion {
     private float elapsedTime;
     //Texture region for the explosion
     private Animation<TextureRegion> bomb;
+    
+    finalgame game;
 
     private TextureAtlas atlas;
+    
+    private boolean remove = false;
 
-    public Explosion(float x, float y) {
+    public Explosion(float x, float y, int Width, int Height) {
         //initialize the x and y coordinate locations for the explosion
         this.x = x;
         this.y = y;
@@ -53,6 +57,10 @@ public class Explosion {
      */
     public void update(float deltaTime){   
      elapsedTime += deltaTime;   
+     
+      if(bomb.isAnimationFinished(elapsedTime)){
+          remove = true;
+      }
     }
     
    
@@ -65,6 +73,8 @@ public class Explosion {
      batch.draw(bomb.getKeyFrame(elapsedTime, true), x, y);
     
     }
+    
+    
     
     /**
      * 

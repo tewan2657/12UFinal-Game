@@ -15,66 +15,86 @@ import com.badlogic.gdx.math.Rectangle;
  * @author Adars
  */
 public class Missile {
-    //INSTANCE Variables
-    //Speed of the missile
+
+    // INSTANCE Variables
+    
+    // Speed of the missile
     private static final int SPEED = 400;
-    //width of the missile
+    // Width of the missile
     public static final int WIDTH = 300;
-    //height of the missile 
+    // Height of the missile 
     public static final int HEIGHT = 25;
-    //Texture image
+    // Texture image
     private static Texture texture;
-    
-   CollisionBlock block;
-    
+
+    // CollisionBlock for missile
+    CollisionBlock block;
+
     // x and y coordinates of missile 
     float x, y;
-    //Remove missile when they leave screen 
+    // Remove missile when they leave screen 
     public boolean remove = false;
-    
 
     public Missile(float y) {
         //initialize the x and y coordinates
         this.x = Gdx.graphics.getWidth();
         this.y = y;
-        this.block = new CollisionBlock(x , y, WIDTH, HEIGHT);
+        //initialize the collision with missile coordinates 
+        this.block = new CollisionBlock(x, y, WIDTH, HEIGHT);
 
-        
-        
-        if (texture == null) 
+        //initialize the texture image;
+        if (texture == null) {
             texture = new Texture("missle.png");
+        }
     }
 
     public void update(float deltaTime) {
         //update thier movement
         x -= SPEED * deltaTime;
         //if they go off screen then remove them.  
-        if(x < -HEIGHT){
+        if (x < -HEIGHT) {
             remove = true;
         }
-        
-            block.move(x, y);
-        
-        }
-    
-  
+        //move the collision block to follow the missile
+        block.move(x, y);
+    }
+
+    /**
+     * render the image
+     *
+     * @param batch
+     */
     public void render(SpriteBatch batch) {
         //draw the missile. 
         batch.draw(texture, x, y);
     }
-    
-    public float getX(){
+
+    /**
+     * get the x coordinate of the missile
+     *
+     * @return x
+     */
+    public float getX() {
         return x;
     }
-    
-    public float getY(){
+
+    /**
+     * get the y coordinate of the missile
+     *
+     * @return y
+     */
+    public float getY() {
         return y;
     }
-    
-    public CollisionBlock getBlock(){
+
+    /**
+     * get the collisionBlock of the missile
+     *
+     * @return block
+     */
+    public CollisionBlock getBlock() {
         return block;
-        
+
     }
-    
-    
+
 }

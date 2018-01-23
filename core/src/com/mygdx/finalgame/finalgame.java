@@ -39,7 +39,7 @@ public class finalgame extends Game {
         //Set the background image
         img = new Texture("cart_background.jpg");
         //set the screen 
-        this.setScreen(game);
+        this.setScreen(new StartScreen(this));
         
         music = Gdx.audio.newMusic(Gdx.files.internal("Beats.mp3"));
         music.setLooping(true);

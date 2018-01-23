@@ -17,6 +17,10 @@ import com.badlogic.gdx.utils.Array;
  * @author Adars
  */
 public class Explosion {
+    //Width and height of the explosion 
+    public static final int WIDTH = 500;
+    public static final int HEIGHT = 500;
+    
     // x and y coordinate locations
     float x, y;
     //animation time
@@ -25,12 +29,14 @@ public class Explosion {
     private Animation<TextureRegion> bomb;
     
     finalgame game;
+    
+    
 
     private TextureAtlas atlas;
+    public boolean remove = false; 
     
-    private boolean remove = false;
 
-    public Explosion(float x, float y, int Width, int Height) {
+    public Explosion(float x, float y) {
         //initialize the x and y coordinate locations for the explosion
         this.x = x;
         this.y = y;
@@ -48,9 +54,9 @@ public class Explosion {
         for (int i = 0; i < bombFrames.size; i++) {
             bombFrames.get(i).flip(true, false);      
         }
-        
-        
+    
     }
+    
     /**
      * update the elapsed time
      * @param deltaTime 
@@ -58,19 +64,22 @@ public class Explosion {
     public void update(float deltaTime){   
      elapsedTime += deltaTime;   
      
-      if(bomb.isAnimationFinished(elapsedTime)){
-          remove = true;
-      }
+     if(bomb.isAnimationFinished(elapsedTime)){
+         remove = true;
+     }
+     
+     
     }
     
    
+    
     /**
      * Render the Bomb animation 
      * @param batch 
      */
     public void render(SpriteBatch batch){
     //Draw the animation
-     batch.draw(bomb.getKeyFrame(elapsedTime, true), x, y);
+     batch.draw(bomb.getKeyFrame(elapsedTime, true), x, y, WIDTH, HEIGHT);
     
     }
     

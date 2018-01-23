@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -37,6 +38,11 @@ public class MainGame implements Screen {
 
     //WORLD
     private World world;
+
+    private Sound kaboom;
+    private Sound failure;
+
+    int life;
 
     //Score 
     int score;
@@ -80,7 +86,10 @@ public class MainGame implements Screen {
 
         //initialize the world;
         world = new World();
-        
+
+        //Initialize the Kaboom sound Effect 
+        kaboom = Gdx.audio.newSound(Gdx.files.internal("kaboom.mp3"));
+
         //initialize the score 
         score = 0;
 
@@ -122,10 +131,9 @@ public class MainGame implements Screen {
         for (Missile missile : missiles) {
             //update 
             missile.update(deltaTime);
-      
             if (missile.remove) {
                 removeMissile.add(missile);
-                 score += 1; 
+                score += 1;
             }
         }
         //remove the missiles that hit the player 
@@ -141,26 +149,31 @@ public class MainGame implements Screen {
                 // add a missile to remove later 
                 removeMissile.add(missile);
                 //add an Explosion animation at the missiles x and y coordinates 
-                 explos.add(new Explosion(finalgame.WIDTH/2 - 100, finalgame.HEIGHT /2, 500, 500));
-              
-               //Pause Score when player is hit by missile 
+                explos.add(new Explosion(finalgame.WIDTH / 2 - 220, finalgame.HEIGHT / 2 - 200));
+                //play the sound effect when missile hits player
+                kaboom.play();
+                //Pause Score when player is hit by missile 
                 score += 0;
-                
-              // this.dispose();
-//               game.setScreen(new GameOverScreen(game,score));
-//               return;
-                
-                
             }
         }
-        
         // remove the missiles 
         missiles.removeAll(removeMissile);
 
         //Update the explosion
+        ArrayList<Explosion> removeExp = new ArrayList<Explosion>();
         for (Explosion explosion : explos) {
             explosion.update(deltaTime);
+            if (explosion.remove) {
+                removeExp.add(explosion);
+                // after the explosion animation is done display GAME OVER
+                this.dispose();
+                game.setScreen(new GameOverScreen(game, score));
+                return;
+            }
+
         }
+        //Remove the missile 
+        explos.removeAll(removeExp);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -192,6 +205,10 @@ public class MainGame implements Screen {
 
     }
 
+    public int getScore() {
+        return score;
+    }
+
     @Override
     public void resize(int i, int i1) {
     }
@@ -210,6 +227,8 @@ public class MainGame implements Screen {
 
     @Override
     public void dispose() {
+        kaboom.dispose();
+
     }
 
 }

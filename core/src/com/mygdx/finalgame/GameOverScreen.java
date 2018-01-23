@@ -64,8 +64,8 @@ public class GameOverScreen implements Screen{
         //Beginning of the sprite Batch
         game.getBatch().begin();
         
-        GlyphLayout scoreFormat = new GlyphLayout(scoreFont, "Score: \n", Color.WHITE,0,Align.left, false);
-        scoreFont.draw(game.batch, scoreFormat, finalgame.WIDTH / 2, finalgame.HEIGHT /2);
+//        GlyphLayout scoreFormat = new GlyphLayout(scoreFont, "Score: \n", Color.WHITE,0,Align.left, false);
+//        scoreFont.draw(game.batch, scoreFormat, finalgame.WIDTH / 2, finalgame.HEIGHT /2);
         //draw the Game Over texture image
         game.batch.draw(gameOver, finalgame.WIDTH / 2 - 175, finalgame.HEIGHT / 2, 350, 100);
         

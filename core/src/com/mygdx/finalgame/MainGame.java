@@ -89,7 +89,7 @@ public class MainGame implements Screen {
 
         //Initialize the Kaboom sound Effect 
         kaboom = Gdx.audio.newSound(Gdx.files.internal("kaboom.mp3"));
-
+        failure = Gdx.audio.newSound(Gdx.files.internal("fail.mp3"));
         //initialize the score 
         score = 0;
 
@@ -151,7 +151,7 @@ public class MainGame implements Screen {
                 //add an Explosion animation at the missiles x and y coordinates 
                 explos.add(new Explosion(finalgame.WIDTH / 2 - 220, finalgame.HEIGHT / 2 - 200));
                 //play the sound effect when missile hits player
-                kaboom.play();
+                failure.play();
                 //Pause Score when player is hit by missile 
                 score += 0;
             }
@@ -228,7 +228,7 @@ public class MainGame implements Screen {
     @Override
     public void dispose() {
         kaboom.dispose();
-
+        failure.dispose();
     }
 
 }

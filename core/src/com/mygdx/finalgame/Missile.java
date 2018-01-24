@@ -52,7 +52,7 @@ public class Missile {
         //update thier movement
         x -= SPEED * deltaTime;
         //if they go off screen then remove them.  
-        if (x < -HEIGHT) {
+        if (x < -WIDTH) {
             remove = true;
         }
         //move the collision block to follow the missile

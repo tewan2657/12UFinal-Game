@@ -14,15 +14,17 @@ import com.badlogic.gdx.graphics.Texture;
  * @author vandl4973
  */
 public class StartScreen implements Screen {
-private static final int playButtonWidth =100;  
-private static final int playButtonHeight =100;
-private static final int playBtny =230;
+private static final int playButtonWidth = 100;  
+private static final int playButtonHeight = 100;
+private static final int playBtny = 230;
  finalgame game;
  
  Texture playButton; 
  
  public StartScreen(finalgame game){
+     
  this.game = game;
+ //texture for the play button
  playButton = new Texture("Pbutt.jpg");
  
  }
@@ -34,13 +36,18 @@ private static final int playBtny =230;
 
     @Override
     public void render(float f) {
+        //background for startscreen
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.getBatch().begin();
+        //is a varable for the x axis for play button
         int x =finalgame.WIDTH/2-playButtonWidth/2;
+        //draws the play button
         game.batch.draw(playButton, x,playBtny, playButtonWidth,playButtonHeight); 
+        //lets you use mouse inputs
         if(Gdx.input.isTouched()){
             this.dispose();
+            //this takes you to the main screen
             game.setScreen(new MainGame(game));
         }
         //}

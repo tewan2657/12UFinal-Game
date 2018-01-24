@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
  *
  * @author Adars
  */
+// we did this with the help of https://www.youtube.com/watch?v=GD2ESv0PPtk 
 public class Missile {
 
     // INSTANCE Variables
